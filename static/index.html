@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<input type="file" name="file" id="file" class="file"/>
+	<input type="file" name="file" id="file2" class="file">
+	<button id="upload">上传</button>
+	<span id="progress">0</span>
+	<img id="image" src="" width="200" />
+
+	<script type="text/javascript">
+		(function () {
+		  'use strict';
+
+		  var files = document.querySelectorAll('.file');
+		  // var file2 = document.querySelector('#file2');
+		  var upload = document.querySelector('#upload');
+		  var progress = document.querySelector('#progress');
+		  var image = document.querySelector('#image');
+		  var xhr = new XMLHttpRequest();
+
+		  upload.addEventListener('click', uploadFile, false);
+		  // file.addEventListener('change', previewImage, false);
+
+		  [].forEach.call(files, function(n){
+		  	n.addEventListener('change', previewImage, false)
+		  })
+
+		  // 点击上传
+		  function uploadFile(event) {
+		    var formData = new FormData();
+		    // console.log(file, file2)
+		    // console.log(file.files, file2.files)
+		    // formData.append('files', file.files[0]);
+		    // formData.append('files', file2.files[0]);
+		    console.log(files);
+		    [].forEach.call(files, function(n){
+		    	formData.append('files', n.files[0])
+		    })
+		    xhr.onload = uploadSuccess;
+		    xhr.upload.onprogress = setProgress;
+		    xhr.open('post', '/upload', true);
+		    xhr.send(formData);
+		  }
+
+		  // 成功上传
+		  function uploadSuccess(event) {
+		    if (xhr.readyState === 4) {
+		      console.log(xhr.responseText);
+		    }
+		  }
+
+		  // 进度条
+		  function setProgress(event) {
+		    if (event.lengthComputable) {
+		      var complete = Number.parseInt(event.loaded / event.total * 100);
+		      progress.innerHTML = complete + '%';
+		    }
+		  }
+
+		  // 图片预览
+		  function previewImage(event) {
+		    var reader = new FileReader();
+		    reader.onload = function (event) {
+		      image.src = event.target.result;
+		    };
+		    reader.readAsDataURL(event.target.files[0]);
+		  }
+		})();
+	</script>
+</body>
+</html>
