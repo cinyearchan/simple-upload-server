@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>文件上传</title>
+	<link rel="stylesheet" type="text/css" href="webuploader.css">
+</head>
+<body>
+	<div id="picker">选择文件</div>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="webuploader.js"></script>
+	<script type="text/javascript">
+		var uploader = new WebUploader.Uploader({
+			swf: 'Uploader.swf',
+			server: 'http://webuploader.duapp.com/server/fileupload.php',
+			pick: '#picker',
+			resize: false,
+			auto: true,
+			accept: {
+				title: 'Images',
+				extensions: 'gif,jpg,jpeg,bmp,png',
+				mimeTypes: 'image/*'
+			},
+			thumb: {
+				width: 110,
+				height: 110,
+				quality: 70,
+				allowMagnity: true,
+				crop: true,
+				type: 'image/jpeg'
+			},
+			chunked: true,
+			method: 'POST'
+		})
+	</script>
+</body>
+</html>

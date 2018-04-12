@@ -14,6 +14,14 @@ app.get('/index', (req, res) => {
   res.sendfile('index.html');
 });
 
+app.get('/test', (req, res)=>{
+  res.sendfile('test.html')
+})
+
+app.get('/jquery.js', (req, res)=>{
+  res.sendfile('jquery.js')
+})
+
 // 单文件
 // app.post('/upload', upload.single('file'), (req, res) => {
 //   // 没有附带文件
